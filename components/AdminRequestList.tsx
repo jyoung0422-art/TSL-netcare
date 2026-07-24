@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import {
   updateRequestStatus,
@@ -94,12 +95,16 @@ function AdminRow({
   copiedId: string | null;
   onCopied: (id: string | null) => void;
 }) {
+  const router = useRouter();
   const shipName = request.captains?.ship_name || "-";
 
   return (
-    <tr className="border-b border-slate-100 hover:bg-slate-50">
+    <tr
+      className="cursor-pointer border-b border-slate-100 hover:bg-slate-50"
+      onClick={() => router.push(`/admin/${request.id}`)}
+    >
       <td className="px-3 py-3 font-medium">{shipName}</td>
-      <td className="px-3 py-3">
+      <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
         <a
           href={`tel:${request.captain_phone}`}
           className="text-blue-600 hover:underline"
@@ -109,13 +114,13 @@ function AdminRow({
       </td>
       <td className="px-3 py-3">{formatDate(request.arrival_date)}</td>
       <td className="px-3 py-3">{formatDate(request.repair_deadline)}</td>
-      <td className="px-3 py-3">
+      <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
         <StatusSelect id={request.id} status={request.status} />
       </td>
-      <td className="px-3 py-3">
+      <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
         <PhotoThumbnails request={request} onPhotoClick={onPhotoClick} />
       </td>
-      <td className="px-3 py-3">
+      <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
         <AdminActions
           request={request}
           copiedId={copiedId}
@@ -137,10 +142,14 @@ function AdminCard({
   copiedId: string | null;
   onCopied: (id: string | null) => void;
 }) {
+  const router = useRouter();
   const shipName = request.captains?.ship_name || "-";
 
   return (
-    <Card className="space-y-3 p-4">
+    <Card
+      className="cursor-pointer space-y-3 p-4"
+      onClick={() => router.push(`/admin/${request.id}`)}
+    >
       <div className="flex items-start justify-between">
         <div>
           <h3 className="font-semibold text-slate-900">{shipName}</h3>
@@ -164,9 +173,14 @@ function AdminCard({
         <p className="text-sm text-slate-600">{request.description}</p>
       )}
 
-      <PhotoThumbnails request={request} onPhotoClick={onPhotoClick} />
+      <div onClick={(e) => e.stopPropagation()}>
+        <PhotoThumbnails request={request} onPhotoClick={onPhotoClick} />
+      </div>
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div
+        className="flex flex-wrap items-center gap-2"
+        onClick={(e) => e.stopPropagation()}
+      >
         <a href={`tel:${request.captain_phone}`}>
           <Button variant="outline" size="sm">
             📞 {formatPhone(request.captain_phone)}
@@ -175,11 +189,13 @@ function AdminCard({
         <StatusSelect id={request.id} status={request.status} />
       </div>
 
-      <AdminActions
-        request={request}
-        copiedId={copiedId}
-        onCopied={onCopied}
-      />
+      <div onClick={(e) => e.stopPropagation()}>
+        <AdminActions
+          request={request}
+          copiedId={copiedId}
+          onCopied={onCopied}
+        />
+      </div>
     </Card>
   );
 }
