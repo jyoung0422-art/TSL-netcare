@@ -14,8 +14,8 @@ export default function HomePage() {
         </p>
       </section>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card className="flex flex-col items-center gap-4 p-8 text-center">
+      <div className="grid gap-4 sm:grid-cols-1 sm:justify-center">
+        <Card className="mx-auto flex w-full max-w-md flex-col items-center gap-4 p-8 text-center">
           <div className="text-4xl">⚓</div>
           <h2 className="text-xl font-semibold">선장님</h2>
           <p className="text-sm text-slate-600">
@@ -23,19 +23,6 @@ export default function HomePage() {
           </p>
           <Link href="/login">
             <Button size="lg">수선 접수하기</Button>
-          </Link>
-        </Card>
-
-        <Card className="flex flex-col items-center gap-4 p-8 text-center">
-          <div className="text-4xl">🔧</div>
-          <h2 className="text-xl font-semibold">관리자</h2>
-          <p className="text-sm text-slate-600">
-            접수 목록 확인, 작업자 배정, 수선 진행 및 완료 처리
-          </p>
-          <Link href="/admin">
-            <Button variant="secondary" size="lg">
-              관리자 페이지
-            </Button>
           </Link>
         </Card>
       </div>
