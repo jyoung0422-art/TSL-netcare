@@ -44,6 +44,14 @@ on boot, so start them each session:
 - To reset the database to a clean schema state: `supabase db reset`.
 - `supabase/schema.sql` is the canonical schema; it is duplicated into
   `supabase/migrations/20250101000000_init.sql` so the CLI applies it automatically.
+- `supabase/migrations/20250101000001_grant_api_roles.sql` grants the Supabase API
+  roles (incl. `service_role`, which the app uses) access to the schema. Without it the
+  local CLI-applied schema returns `permission denied for table ...` (hosted Supabase
+  adds these grants automatically). RLS is intentionally not used — every DB call goes
+  through the `service_role` key, which bypasses RLS.
+- Do NOT run `npm run build` while `npm run dev` is running: both write to `.next` and
+  it corrupts the dev build / server-action ids (symptoms: "Internal Server Error" or a
+  hanging/404 server action). If it happens, stop dev, `rm -rf .next`, restart `npm run dev`.
 
 ### Lint / build
 
